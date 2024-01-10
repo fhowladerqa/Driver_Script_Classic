@@ -1,0 +1,49 @@
+
+
+
+Dim intArray(10, 10, 10) As Integer
+ReDim Preserve intArray(10, 10, 20)
+ReDim Preserve intArray(10, 10, 15)
+ReDim intArray(10, 10, 10)
+
+NewDate = DateAdd("m", 1, "31-Jan-95")
+Msgbox NewDate
+
+ODBC requires four components: an ODBC-enabled application, 
+the ODBC driver manager, ODBC database drivers, and data sources. 
+The following diagram indicates how these components work together 
+in a single-tier environment.
+Function ConnectionTest(myQuery)
+
+CONN_STRING = 	"Driver={Microsoft ODBC for Oracle}; " & _
+				"CONNECTSTRING=(DESCRIPTION=" & _
+				"(ADDRESS=(PROTOCOL=TCP)" & _
+				"(HOST="& hostname &")(PORT="& portNum &"))" & _
+				"(CONNECT_DATA=(SERVICE_NAME="& serviceName &"))); uid="& username &";pwd="& password &";"
+
+'Const DB_CONNECT_STRING = "Provider=SQLOLEDB;Server=COMSSTSQA107\COMSSTSQA107;Database=overlay_mgmt;user id =OVERLAY_MAINT;password=changeyourpassword"
+
+Set myConn = CreateObject("ADODB.Connection")
+Set objRecordSet = CreateObject("ADODB.Recordset")
+                
+	myConn.Open CONN_STRING
+	objRecordSet.Open myQuery, myConn
+	Wscript.Echo objRecordSet.fields.item(1) & " " & objRecordSet.fields.item(2)
+	myConn.Close
+
+End function
+
+How would you run tests with Java with three tier tests?
+
+Using If and Else statements
+
+What is a getway 404 HTTP?
+
+Server not working.
+
+How are you designing test cases with Java Frameworks(TestNG)?
+
+
+
+ 
+

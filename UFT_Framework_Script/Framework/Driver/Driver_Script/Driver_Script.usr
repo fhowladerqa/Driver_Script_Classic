@@ -1,0 +1,90 @@
+'*************************************************************************************************************************
+'Script: Web_Tour_Booking_Reservatipn
+'Author: Faris Howlader
+'Date: 05/23/2020
+'Parameters: jojo and bean from a user of Joseph Marshall
+'******************************************************************************
+SystemUtil.CloseProcessByName "iexplore.exe"
+SystemUtil.Run "iexplore.exe","http://127.0.0.1:1080/WebTours/index.htm"
+
+Call fEnterEdit(wBrowser,wPage,"username","jojo")
+
+Call fEnterEdit(wBrowser,wPage,"password","bean")
+Wait 2
+Call fClickImage(wBrowser,wPage,"Login")
+'Read: User and System process
+'User Environment
+OS = Environment.Value("OS")
+OSVersion = Environment("OSVersion")
+Username = Environment("UserName")
+TestName = Environment("TestName")
+ActionName = Environment("ActionName")
+TestName = Environment("TestName")
+
+
+
+print OS
+print OSVersion
+print Username
+Print TestName
+Print ActionName
+Print TestName
+
+Dim xlDataFile,scrFol,MainFol,TPFol,TCFol,LibFol,ResFol,EnvFol,FunLibFol,ObjRep,strUserPathVariable
+
+strUserPathVariable = "C:\Users\mirza\Documents\Regression_Framework\Environment Variable\Web_Tour_InFo.xml"
+Environment.LoadFromFile(strUserPathVariable)
+Web_Tour = Environment("Web_Tour")
+
+scrFol = Environment.Value("TestDir")
+strUserPathVariable = Environment.Value("Web_Tour")
+scrFol = Split(scrFol,"\Web_Tour_Booking_Reservation")
+
+'Get URL which is same as the name of the script
+print " Web_Tour " & Web_Tour
+Print strUserPathVariable
+
+MainFol = scrFol(0)
+TPFol = MainFol&"\Test Plan"
+TCFol = MainFol&"\Test Case"
+LibFol = MainFol&"\Function Library"
+ResFol = MainFol&"\Result"
+EnvFol = MainFol&"\Environment Variable"
+ObjRep = MainFol&"\Shared Object Repository"
+
+'Import Test Case from an Excel Sheet.......................................
+'xlDataFile = TCFol&"\Web_Tour Test Case.xlsx"
+'Call fImportSheet(xlDataFile,"Test Case","RunAppList")
+DataTable.AddSheet "TestCase"
+Datatable.AddSheet "TestSTep"
+Datatable.AddSheet "Module"
+
+'Import data from an external file(organizer)...
+DataTable.ImportSheet "C:\Users\mirza\Documents\Regression_Framework\Test Case\Web_Tour Test Case.xlsx",1,4
+DataTable.ImportSheet "C:\Users\mirza\Documents\Regression_Framework\Test Case\Web_Tour Test Case.xlsx",2,5
+DataTable.ImportSheet "C:\Users\mirza\Documents\Regression_Framework\Test Case\Web_Tour Test Case.xlsx",3,5
+
+TestRowCount = Datatable.GetSheet("TestCase").GetRowCount
+
+For i = 1 To TestRowCount Step 1 
+	Datatable.SetCurrentRow(i)
+	
+	TestCaseExe = DataTable(1,4)
+	
+	If UCase(TestCaseExe) = "Y" Then 
+	TestCaseID = DataTable(1,3)
+
+'Read Executable Test Xase ids under executable file......................
+    TCRowCount = Datatable.GetSheet(4).GetRowCount
+    For j = 1 To TCRowCount Step 1
+    Datatable.SetCurrentRow(j)
+    TestCaseExe2 = Datatable(1,4)
+    TestCaseExe3 = DataTable(2,5)
+    
+    If UCase(TestCaseExe) = "Y" and TestCaseId=    TestCaseExe2  Then
+    	TestCaseID = DataTable(1,4)
+    End If
+	Next
+	End If
+Next
+

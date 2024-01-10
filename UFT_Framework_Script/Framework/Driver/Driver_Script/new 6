@@ -1,0 +1,19 @@
+Garbage Collection in Java:
+Process of reclaiming the runtime unused memory by destroying the unused objects.
+
+Methods like free() in C, and delete() in C++ are used to perform Garbage Collection.
+
+In Java, garbage collection happens automatically during the lifetime of a program.
+
+At any point of time, the heap memory consists of two types of objects:
+
+	Live - these objects are being used and referenced from somewhere else.
+	Dead - these objects are no longer used or referenced from anywhere
+	
+The garbage collector finds these unused objects and deletes them to free up memory.
+
+
+
+
+
+

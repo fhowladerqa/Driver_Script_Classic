@@ -1,0 +1,455 @@
+'''Function Name: ADMIN_CREDENTIALS
+'''Created By: Faris Howlader
+'''Parameters: Username "Any ESS User" will log into the system"
+'''Date: 4/27/2020
+
+Function ForWait(sSecond)
+     Wait sSecond
+		
+End Function
+
+		
+Function CloseNOpenBrowser(Browser,Url)
+	Call CloseAllBrowser
+	Call ForWait(2)
+	SystemUtil.Run "iexplore.exe","https://opensource-demo.orangehrmlive.com/index.php/auth/login"
+End Function
+					
+	Function CloseAllBrowser()
+				SystemUtil.CloseProcessByName "iexplore.exe"
+			
+							    
+End  Function
+
+
+Function fEdit_Input(fName,fText,fValue)
+	Dim myp,myo   												'Decleration
+	
+	Set myp=Browser("creationtime:=0").Page("creationtime:=0")  'Creation
+	
+	Set myo=Description.Create()				'Creation
+	myo("micclass").Value="WebEdit"       'Assigning Value
+	myo("name").Value=fName
+	myo("index").Value=fText
+	
+	If myp.Webedit(myo).Exist(10) Then
+		myp.Webedit(myo).Set fValue
+		Reporter.ReportEvent micPass,"Enter Value into Field","Successfull"		
+		Else
+		Reporter.ReportEvent micFail,"Enter Value into Field","UnSuccessfull"
+	End If
+	
+End Function
+
+Function fWebButtonExist(fName,fText)
+	Dim myp,myo   												'Decleration
+	
+	Set myp=Browser("micclass:=Browser").Page("micclass:=Page")  'Creation
+	
+	Set myo=Description.Create()				'Creation
+	myo("micclass").Value="WebButton"       'Assigning Value
+	myo("name").Value=fName
+	myo("height").Value=fText
+	
+	If myp.WebButton(myo).Exist(10) Then
+	   myp.WebButton(myo).Click
+		
+		Reporter.ReportEvent micPass,"WebButton Object Exists","Successfull"		
+		Else
+		Reporter.ReportEvent micFail,"WebButton does not Exist","UnSuccessfull"
+		
+	End If
+	
+End Function
+
+Function fLinkExist(fName,fText)
+	Dim myp,myo   												'Decleration
+	
+	Set myp=Browser("micclass:=Browser").Page("micclass:=Page")  'Creation
+	
+	Set myo=Description.Create()				'Creation
+	myo("micclass").Value="Link"       'Assigning Value
+	myo("name").Value=fName
+	myo("html tag").Value=fText
+	
+	If myp.Link(myo).Exist(10) Then
+	   myp.Link(myo).Click
+		
+		Reporter.ReportEvent micPass,"LinkButton Object Exists","Successfull"		
+		Else
+		Reporter.ReportEvent micFail,"LinkButton does not Exist","UnSuccessfull"
+		
+	End If
+	
+End Function
+
+Function fWebElementExist(fName,fText)
+	Dim myp,myo   												'Decleration
+	
+	Set myp=Browser("micclass:=Browser").Page("micclass:=Page")  'Creation
+	
+	Set myo=Description.Create()				'Creation
+	myo("micclass").Value="WebElement"       'Assigning Value
+	myo("innerhtml").Value=fName
+	myo("height").Value=fText
+	
+	If myp.WebElement(myo).Exist(10) Then
+	   myp.WebElement(myo).Click
+		
+		Reporter.ReportEvent micPass,"WebElement Object Exists","Successfull"		
+		Else
+		Reporter.ReportEvent micFail,"WebElement does not Exist","UnSuccessfull"
+		
+	End If
+	
+End Function
+
+Function fWebFileExist(fName,fText)
+	Dim myp,myo   												'Decleration
+	
+	Set myp=Browser("micclass:=Browser").Page("micclass:=Page")  'Creation
+	
+	Set myo=Description.Create()				'Creation
+	myo("micclass").Value="WebFile"       'Assigning Value
+	myo("name").Value=fName
+	myo("height").Value=fText
+	
+	If myp.WebFile(myo).Exist(10) Then
+	   myp.WebFile(myo).Click
+		
+		Reporter.ReportEvent micPass,"WebWebFile Object Exists","Successfull"		
+		Else
+		Reporter.ReportEvent micFail,"WebWebFile does not Exist","UnSuccessfull"
+		
+	End If
+	
+End Function
+
+Function fWebImageExisting(fName,fText)
+	Dim myp,myo   												'Decleration
+	
+	Set myp=Browser("micclass:=Browser").Page("micclass:=Page")  'Creation
+	
+	Set myo=Description.Create()				'Creation
+	myo("micclass").Value="Image"       'Assigning Value
+	myo("name").Value=fName
+	myo("height").Value=fText
+	
+	If myp.Image(myo).Exist(10) Then
+	   myp.Image(myo).Click
+		
+		Reporter.ReportEvent micPass,"Image Object Exists","Successfull"		
+		Else
+		Reporter.ReportEvent micFail,"Image does not Exist","UnSuccessfull"
+		
+	End If
+	
+End Function
+
+Function fWebCheckBoxExist(fName,fText)
+	Dim myp,myo   												'Decleration
+	
+	Set myp=Browser("micclass:=Browser").Page("micclass:=Page")  'Creation
+	
+	Set myo=Description.Create()				'Creation
+	myo("micclass").Value="WebCheckBox"       'Assigning Value
+	myo("name").Value=fName
+	myo("height").Value=fText
+	
+	If myp.WebCheckBox(myo).Exist(10) Then
+	   myp.WebCheckBox(myo).Click
+		
+		Reporter.ReportEvent micPass,"WebCheckBox Object Exists","Successfull"		
+		Else
+		Reporter.ReportEvent micFail,"WebCheckBox does not Exist","UnSuccessfull"
+		
+	End If
+	
+End Function
+
+Function fWebListExist(fName,fText,ComboBox)
+	Dim myp,myo   												'Decleration
+	
+	Set myp=Browser("micclass:=Browser").Page("micclass:=Page")  'Creation
+	
+	Set myo=Description.Create()				'Creation
+	myo("micclass").Value="WebList"       'Assigning Value
+	myo("name").Value=fName
+	myo("height").Value=fText
+	
+	If myp.WebList(myo).Exist(10) Then
+	   myp.WebList(myo).Select ComboBox
+		
+		Reporter.ReportEvent micPass,"WebList Object Exists","Successfull"		
+		Else
+		Reporter.ReportEvent micFail,"WebList does not Exist","UnSuccessfull"
+		
+	End If
+	
+End Function
+
+'''Function Name: HRMImport Sheet
+'''Created By: Faris Howlader
+'''Parameters: Username "admin" will log into the system"
+'''Date: 4/27/2020
+
+Function fImportSheet(filePath,sSheet,dtSheet)
+	 Datatable.AddSheet dtSheet 'Add New Sheet during Runtime
+	 Datatable.ImportSheet filePath,sSheet,dtSheet   'import sheet
+	 
+End Function
+
+'Application Related function collection
+Function fVerifyWTAdminTestCase(dtsheet,uid,pw)
+	
+	Dim nRow
+	nRow = Datatable.GetSheet(dtsheet).GetRowCount
+	For i = 1 To nRow
+	Datatable.SetCurrentRow(i)
+	iTestCaseID = Datatable.Value("Test Case ID ","dtsheet")
+        iTest title = Datatable.Value("Test title","dtsheet")
+        iTestCaseSteps = Datatable.Value("Test Case Steps","dtsheet")
+        iTestCaseSteps = DataTable.Value("Description","dtsheet")
+        iExpected Result = Datatable.Value("Expected Result","dtsheet")
+        iActual Result = Datatable.Value("Actual Result","dtsheet")
+        iStatus = Datatable.Value("Status","dtsheet")
+        
+        If iExecute = "YES" Then
+        	
+        	Select Case iTestCaseID
+        	  Case "MTC01"
+        	  Call VerifyWTLandingPage()
+        	  
+        	   Case "MTC02"
+        	   Call VerifyFlightPage()
+        	End Select
+        End If
+		
+	Next
+End Function
+
+Function VerifyWTLandingPage()
+	
+End Function
+
+Function VerifyFlightPage()
+	
+End Function
+
+'Generic Function Library
+'************************************************
+
+'Create Global Object for Browser and Page
+Dim wBrowser,wPage    					'Decleration
+Set wBrowser=Description.Create()		'Creation
+wBrowser("micclass").Value="Browser"    'Defining
+
+Set wPage=Description.Create()		'Creation
+wPage("micclass").Value="Page"    'Defining
+
+
+'**********************************************************
+'Name: fEnterEdit
+'Purpose: to handle WebEdit type of Objet
+'09/23/2018              I will use extp to enhance this function
+'***********************************************
+
+Function fEnterEdit(wBrowser,wPage,EditName,EditValue)
+	
+	Dim wEdit,cEdit,EditCount		'Decleration
+	Set wEdit=Description.Create()	'Creation
+	wEdit("micclass").Value="WebEdit" 'Defining
+	
+	Set cEdit=Browser(wBrowser).Page(wPage).ChildObjects(wEdit)		'Create Child Object
+	
+	EditCount=cEdit.Count
+	
+	For i = 0 to EditCount-1		
+		If cEdit(i).GetRoProperty("name")=EditName Then
+			cEdit(i).Set EditValue
+			Reporter.ReportEvent micDone,"Value: "&EditValue&"Enter to ",EditName
+			Exit For
+		End If	
+	Next
+		
+End Function
+
+
+
+'**********************************************************
+'Name: fClickImage
+'Purpose: to Click Image type of Objet
+'***********************************************
+
+Function fClickImage(wBrowser,wPage,ImageAlt)
+	
+	Dim wImage,cImage,ImageCount		'Decleration
+	Set wImage=Description.Create()	'Creation
+	wImage("micclass").Value="Image" 'Defining
+	
+	Set cImage=Browser(wBrowser).Page(wPage).ChildObjects(wImage)		'Create Child Object
+	
+	ImageCount=cImage.Count
+	
+	For i = 0 to ImageCount-1		
+		If cImage(i).GetRoProperty("alt")=ImageAlt Then
+			cImage(i).Click
+			Exit For
+		End If	
+	Next
+		
+End Function
+
+
+
+'**********************************************************
+'Name: fSelectList
+'Purpose: to handle WebEdit type of Objet
+'09/23/2018              I will use extp to enhance this function
+'***********************************************
+'
+Function fSelectList(wBrowser,wPage,ListName,ListValue)
+	
+	Dim wList,cList,ListCount		'Decleration
+	Set wList=Description.Create()	'Creation
+	wList("micclass").Value="WebList" 'Defining
+	
+	Set cList=Browser(wBrowser).Page(wPage).ChildObjects(wList)		'Create Child Object
+	
+	ListCount=cList.Count
+	
+	For i = 0 to ListCount-1		
+		If cList(i).GetRoProperty("name")=ListName Then
+			cList(i).Select ListValue
+			Exit For
+		End If	
+	Next
+		
+End Function
+
+
+
+'**********************************************************
+'Name: fSetWebCheckBox
+'Purpose: to handle webcheckbox type of Objet
+'***********************************************
+
+Function fSetWebCheckBox(wBrowser,wPage,BoxName,Status)
+	
+	Dim wBox,cBox,BoxCount		'Decleration
+	Set wBox=Description.Create()	'Creation
+	wBox("micclass").Value="WebCheckBox" 'Defining
+	
+	Set cBox=Browser(wBrowser).Page(wPage).ChildObjects(wBox)		'Create Child Object
+	
+	BoxCount=cBox.Count
+	
+	For i = 0 to BoxCount-1		
+		If cBox(i).GetRoProperty("name")=BoxName Then
+			cBox(i).Set Status
+			Exit For
+		End If	
+	Next
+		
+End Function
+
+'**********************************************************
+'Name: fSelectRadio
+'Purpose: to handle WebRadioGroup type of Objet
+'***********************************************
+
+Function fSelectRadio(wBrowser,wPage,RadioName,RadioValue)
+	
+	Dim wRadio,cRadio,RadioCount		'Decleration
+	Set wRadio=Description.Create()	'Creation
+	wRadio("micclass").Value="WebRadioGroup" 'Defining
+	
+	Set cRadio=Browser(wBrowser).Page(wPage).ChildObjects(wRadio)		'Create Child Object
+	
+	RadioCount=cRadio.Count
+	
+	For i = 0 to RadioCount-1		
+		If cRadio(i).GetRoProperty("name")=RadioName Then
+			cRadio(i).Select RadioValue
+			Exit For
+		End If	
+	Next
+		
+End Function
+
+
+'**********************************************************
+'Name: fGetCurrentDate
+'Purpose: to Get Current Date
+'***********************************************
+Function fGetCurrentDate()
+	Dim effDate		'Decleration
+	effDate=Date
+	fGetCurrentDate=effDate	
+End Function
+
+
+
+
+'How to call from a particuar function from another script
+
+
+
+'***********************************************************************************************************************
+'Purpose:This function formats the current date to input format
+
+'Revision History:
+'Date                                Name                                     Action
+'09/14/2018                                                                 Originally Created
+ '***********************************************************************************************************************
+ Function fGetCurrentDateFormat(format_date)
+
+    Dim day1, month1,year1, SystemDate
+
+    SystemDate = Date
+    
+    Day1 = Datepart("d",SystemDate)
+    month1 = Datepart("m",SystemDate)
+    year1 = Datepart("yyyy",SystemDate)
+
+    If len(Day1) = 1 then
+        Day1 = "0" & Day1
+    End If
+    
+    If len(month1) = 1 then
+        month1 = "0" & month1
+    End If
+    
+    If strComp(LCase(format_date), "yyyy-mm-dd") = 0   Then
+        fGetCurrentDateFormat = year1& "-" & month1 & "-" & Day1 
+    Elseif strComp(LCase(format_date), "mm/dd/yyyy") = 0   Then
+        fGetCurrentDateFormat = month1& "/" & Day1 & "/" & year1 
+    Elseif strComp(LCase(format_date), "yyyy/mm/dd") = 0   Then
+        fGetCurrentDateFormat = year1& "/" & month1 & "/" & Day1
+	Elseif strComp(LCase(format_date), "dd/mm/yyyy") = 0   Then
+        fGetCurrentDateFormat = Day1& "/" & month1 & "/" & year1        
+
+    End If 
+    
+End Function
+
+Function fBrowserSelection(Bro,Exe)
+    
+    Select Case Bro
+    	Case "IE"
+    	Exe = "iexplore.exe"
+    	
+    	Case "Chrome"
+    	Exe = "iexplore.exe"
+    	
+    	Case "Firefox"
+    	Exe = "iexplore.exe"
+    	
+    End Select    
+End Function
+
+Function fGetEnvironment(AppName,url)
+   url = DataTable.GetSheet("RunEnv").GetParameter(AppName)
+End Function
+
+

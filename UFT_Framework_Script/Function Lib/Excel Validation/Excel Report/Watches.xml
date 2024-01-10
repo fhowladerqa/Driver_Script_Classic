@@ -1,0 +1,9 @@
+﻿<Properties>
+  <WatchEntry0 value="dbCellValue" />
+  <WatchEntry1 value="mCellValue" />
+  <WatchEntry2 value="k+1" />
+  <WatchEntry3 value="m" />
+  <WatchEntry4 value="j" />
+  <WatchEntry5 value="mCellValue=dbCellValue(m-j-1)" />
+  <WatchEntry6 value="dbCellValue(m-j-1)" />
+</Properties>

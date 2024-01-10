@@ -1,0 +1,16 @@
+The information on each team varies but let me take a crack at it.
+ 
+The team they will be working on is called Product Tracking and Reporting (PTR). PTR is the system of record for all delivery status information for mail 
+and parcels with trackable services and barcodes. Product Tracking & Reporting System (PTR) provides the core corporate infrastructure for package visibility
+ collecting and reporting location and delivery status for packages and mailpieces with Extra Services. PTR is the official data source for service performance reporting 
+for parcels and Extra Services, including service measurement reporting mandated by Postal Accountability and Enhancement Act (PAEA) for market dominant parcels 
+and Extra Services. The Product Tracking and Reporting system accepts electronic manifests from mailers while also extracting scan event and payment data back to customers
+ and various service providers. PTR offers 24x7 visibility of tracking events integrated across products with interfaces to customer call centers, retail terminals, the 
+internet-driven USPS Tracking website, USPS Text Tracking, PostalOne! including the Electronic Verification System (eVS) and Scan Based Payment, Enterprise Data Warehouse (EDW/PPR) 
+and other field systems such as the Intelligent Mail Data Acquisition System (IMDAS), Mobile Delivery Device (MDD), Rural Workhour Tracker (RWHT), Retail Systems, Intelligent Mail 
+Visibility (IM-VIS), and Surface Visibility (SV).
+ 
+PTR has around 70 FTEs supporting the efforts. The team is mainly in Wilkes Barre but there are others supporting it from different USPS locations including their headquarters offices.
+ 
+The team is currently transitioning from a waterfall environment to Agile. Most of USPS uses some version of Agile development currently.
+ 

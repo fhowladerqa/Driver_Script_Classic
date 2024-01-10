@@ -1,0 +1,167 @@
+
+'*************************************************************************************************************************
+'Script: Web_Tour_Booking_Reservation
+'Author: Faris Howlader
+'Date: 06/13/2020
+'Parameters: jojo and bean from a user of Joseph Marshall
+'******************************************************************************
+''Read: User and System process
+'User Environment
+OS = Environment.Value("OS")
+OSVersion = Environment("OSVersion")
+Username = Environment("UserName")
+TestName = Environment("TestName")
+ActionName = Environment("ActionName")
+TestName = Environment("TestName")
+
+print OS
+print OSVersion
+print Username
+Print TestName
+Print ActionName
+Print TestName
+
+strUserPathVariable = "C:\Users\mirza\Documents\Regression_Framework\Environment Variable\Web_Tour_InFo.xml"
+Environment.LoadFromFile(strUserPathVariable)
+Web_Tour = Environment("Web_Tour")
+
+'Get URL which is same as the name of the script
+print " Web_Tour " & Web_Tour
+Print strUserPathVariable
+
+Dim scrFol, MainFol, TDFol, TCFol, LibFol, ResulFol, EnvFol, nRow, iApplication, iExecute, iBrowser, xlDataFile 
+
+scrFol = Environment.Value("TestDir")
+scrFol = Split(scrFol,"\Driver Script")
+
+MainFol = scrFol(0)   'framework folder
+TDFol = MainFol&"\Test Data"
+TCFol = MainFol&"\Test Case"
+LibFol = MainFol&"\Function Library"
+SharedFol = MainFol&"\Shared Object Repository"
+EnvFol = MainFol&"\Environment Variable"
+ResulFol = MainFol&"\Results"
+'Read Environment from data table
+'Call fImportSheet(xlDataFile,"Environment","RunEnv")
+
+'Call fGetEnvironment("WebTour",url)
+
+'Import Test Data from Excel Sheet....................
+xlDataFile = TDFol&"\TestDataFile.xlsx"
+'Create Environment Variable for excel File
+Environment("XlDatafile")=xlDataFile
+Call fImportSheet(xlDataFile,"AppList","RunAppList")
+
+nRow = Datatable.GetSheet("RunApplist").GetRowCount
+
+For i = 1 To nRow
+Datatable.SetCurrentRow(i)
+iApplication = Datatable.Value("Application","RunAppList")
+iExecute = DataTable.Value("Execute","RunAppList")
+iBrowser = Datatable.Value("Browser","RunAppList")
+
+Environment("Browser")=iBrowser
+
+If iExecute="YES" Then
+	
+     Select Case iApplicaton
+         
+         Case "WebTour"
+         print "Now Running Application: "&iApplication
+     	 RunAction "WebTour", oneIteration
+     	 
+     	 Case "Facebook"
+         print "Now Running Application: "&iApplication
+     	 RunAction "Facebook", oneIteration
+     
+          Case "ChaseApp"
+         print "Now Running Application: "&iApplication
+     	 RunAction "ChaseApp", oneIteration
+     
+          Case "OrangeHRM"
+          print "Now Running Application: "&iApplication
+     	 RunAction "OrangeHRM", oneIteration
+     
+         Case Else 
+         Print "Application Being Selected"
+         Reporter.ReportEvent micDone, "Application Being Selected","Done"
+         'ExitTest         
+     
+     End Select
+  End If
+
+	
+Next
+
+Dim scrFol, MainFol, TDFol, TCFol, LibFol, ResulFol, EnvFol, xlDataFile, nRow, iRole, iExecute, iUID, iPW, XlCasefile, XlExecutionfile
+
+scrFol = Environment.Value("TestDir")
+scrFol = Split(scrFol,"\Driver Script")
+
+MainFol = scrFol(0)   'framework folder
+TDFol = MainFol&"\Test Data"
+TCFol = MainFol&"\Test Case"
+LibFol = MainFol&"\Function Library"
+SharedFol = MainFol&"\Shared Object Repository"
+EnvFol = MainFol&"\Environment Variable"
+ResulFol = MainFol&"\Results"
+
+'Import Test Case from Excel Sheet....................
+
+'Create Environment Variable for excel File
+iBrowser = Environment("Browser")
+Call fBrowserSelection(iBro,Exe)
+Call fBrowserSelection(iBro,Exe)
+Environment("XLCasefile")=XlCasefile
+XlCasefile = TDFol&"\TestDataFile.xlsx"
+Call fImportSheet(XlCasefile,"WebTour","RunWebTour")
+
+nRow = Datatable.GetSheet("RunWebTour").GetRowCount
+
+For i = 1 To nRow
+Datatable.SetCurrentRow(i)
+iRole = Datatable.Value("Role","RunWebTour")
+iExecute = Datatable.Value("Execute","RunWebTour")
+iUID = DataTable.Value("UID","RunWebTour")
+iPW = Datatable.Value("PW","RunWebTour")
+
+If iExecute="YES" Then
+	
+     Select Case iRole
+         
+         Case "Admin"
+         print "Now Running Role: "&iRole
+    
+     	 Case "HD"
+         print "Now Running HD: "&iRole
+     	 
+     
+          Case "User"
+         print "Now Running User: "&iRole
+          XlExecutionfile = TCFol&"\Test Case.xlsx"
+         Call fImportSheet(XlExecutionfile,"Test Execution","TestCaseExecution")
+         
+       Call fVerifyWTAdminTestCase(Exe,u,"RunAdmin",iUID,iPW)
+
+     	'Call VerifyFlightPage()
+     	
+         Print "Users Are Being Selected"
+         Reporter.ReportEvent micDone, "Users Are Being Selected","Done"
+         'ExitTest         
+     
+     End Select
+  End If
+
+	
+Next
+
+
+'SystemUtil.CloseProcessByName "iexplore.exe"
+'SystemUtil.Run "iexplore.exe","http://127.0.0.1:1080/WebTours/index.htm"
+'
+'Call fEnterEdit(wBrowser,wPage,"username","jojo")
+'
+'Call fEnterEdit(wBrowser,wPage,"password","bean")
+'Wait 2
+'Call fClickImage(wBrowser,wPage,"Login")
+

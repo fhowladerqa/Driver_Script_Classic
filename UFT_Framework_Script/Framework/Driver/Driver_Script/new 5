@@ -1,0 +1,441 @@
+'''Test Name: Admin User Action
+'''Created By: Faris Howlader
+'''Parameters: Username "admin" will log into the system and password "admin123"
+'''Date: 4/27/2020
+'*****************************************************************************************************************************************
+'''''To make sure that the Previous Browser closes and opens Current Browser while running the test
+Call CloseNOpenBrowser(Browser,Url)
+Call ForWait(5)
+'-------------------------------------------------------------------------------
+'Working with Env Variable File Directly
+'--------------------------------------------------------------------------------
+DatabaseHost = Environment.Value("SQL_STARTUP")
+URL = Environment.Value("ORANGE_URL")
+'------------------------------------------------------------------------------------
+'Read: User and System process
+'User Environment
+OS = Environment.Value("OS")
+OSVersion = Environment("OSVersion")
+Username = Environment("Username")
+TestName = Environment("TestName")
+ActionName = Environment("ActionName")
+TestName = Environment("TestName")
+
+
+print URL
+print DatabaseHost
+print OS
+print OSVersion
+print Username
+Print TestName
+Print ActionName
+Print TestName
+
+strUserPath = "C:\Users\mirza\Documents\Orange_HRM Documents\ORANGEHRM_EMPLOYEE_CREDENTIALS_LOG.xml"
+Environment.LoadFromFile(strUserPath)
+
+username = Environment("User")
+password = Environment("Password")
+
+'Loading generic environment variable file that has all the paths..........................................
+strUserPath = "C:\Users\mirza\Documents\Orange_HRM Documents\SQL_RUN_QUERY.xml"
+Environment.LoadFromFile(strUserPath)
+TestCaseID = Environment("TCID")
+
+'Get TCID which is same as the name of the script
+print " TCID " & TestCaseID
+Print strUserPath
+'Call ForWait(5)
+''To display an Admin user name
+'Call  fEdit_Input("txtUsername","17",username)
+''To display an encripted code which shall not be known.........
+'Call fEdit_Input("txtPassword","17",password)
+'Call fWebButtonExist("LOGIN","26")
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'Call fWebElementExist("Admin","40")
+'Get TCID which is the name of the script based on Users Management and will display the matched records on excel sheet
+Dim objConnection, objRecordSet, RecordCount
+'Setting up the connection of Database
+Set objConnection = CreateObject("ADODB.Connection")
+Set objRecordSet = CreateObject("ADODB.Recordset")
+'Generate Connection String from a Database
+objConnection.Provider = ("Microsoft.ACE.OLEDB.12.0")
+
+objConnection.Open "C:\Users\mirza\Documents\Unified Functional Testing\Users_System.accdb"
+
+objRecordSet.Open "Select * from System_Users",objConnection
+
+RecordCount = 0
+Do Until objRecordset.EOF
+RecordCount = RecordCount + 1
+
+If RecordCount > 1 and RecordCount < 7 Then
+Call ForWait(5)
+'To display an Admin user name
+Call  fEdit_Input("txtUsername","17",username)
+'To display an encripted code which shall not be known.........
+Call fEdit_Input("txtPassword","17",password)
+Call fWebButtonExist("LOGIN","26")
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Call fWebElementExist("Admin","40")
+'Get TCID which is the name of the script based on Users Management and will display the matched records on excel sheet
+	
+Browser("OrangeHRM").Page("OrangeHRM_3").WebEdit("searchSystemUser[userName]").Set objRecordSet.Fields("USERNAME")
+Call ForWait(5)
+Browser("OrangeHRM").Page("OrangeHRM_3").WebList("searchSystemUser[userType]").Select "ESS"
+Call ForWait(5)
+Browser("OrangeHRM").Page("OrangeHRM_3").WebEdit("searchSystemUser[employeeName]").Set objRecordSet.Fields("EMPLOYEE_NAME")
+Call ForWait(5)
+Browser("OrangeHRM").Page("OrangeHRM_3").WebList("searchSystemUser[status]").Select "Enabled"
+Call ForWait(5)
+Browser("OrangeHRM").Page("OrangeHRM_3").WebButton("Search").Click
+Call ForWait(5)
+Browser("OrangeHRM").Page("OrangeHRM_3").Link("Welcome Admin").Click
+Browser("OrangeHRM").Page("OrangeHRM_3").Link("Logout").Click
+End If
+objRecordSet.MoveNext
+Loop
+objRecordSet.Close
+objConnection.Close
+
+'Call fLinkExist("Logout","14") '' Logging out of the ORANGEHRM credentials from an admin user.......................................................
+
+Dim StrImportFolder, nRow, i,iUsername, iRole, iEmployee, iStatus, iEmployeeId
+Datatable.AddSheet "Users"
+Datatable.ImportSheet "C:\Users\mirza\Documents\ESS_EXCEL_INFO\ORANGE_HRM_NOTIFICATION_SMOKE.xlsx","System_Users","Users"
+StrImportFolder = "C:\Users\mirza\Documents\Orange_HRM Documents\SQL_RUN_QUERY.xml"
+Environment.LoadFromFile(StrImportFolder)
+NameofTestCase = Environment("Test_Case_Name")
+StrImportFolder = Split(StrImportFolder, "\SQL_RUN_QUERY")
+
+'Print " Test_Case_Name " & StrImportFolder
+nRow = Datatable.GetSheet("Users").GetRowCount
+For i = 1 To nRow
+datatable.Setcurrentrow(i)
+iUsername = Datatable.Value("Username","Users")
+iRole = Datatable.Value("User_Role","Users")
+iEmployee = Datatable.Value("Employee_Name","Users")
+iStatus = Datatable.Value("Status","Users")
+iEmployeeId = Datatable.Value("Employee_Id","Users") 
+
+     If iRole = "YES" Then
+     	
+     	Select Case iUsername 
+     		Case "Admin"
+     		print User
+     	End Select
+     End If
+Next
+
+'To display the script of the TCID based on looking over the validated record of OrangeHRM users
+strDatabasePath = "C:\Users\mirza\Documents\Orange_HRM Documents\ORANGEHRM_EMPLOYEE_INFO.xml"
+Environment.LoadFromFile(strDatabasePath)
+
+URL = Environment("ORANGE_URL")
+UID = Environment("Username")
+PW = Environment("Password")
+SQLCON = Environment("StrEnvConnection")
+
+Dim AnyString, MyStr, MyVar, MyDecl
+AnyString = "Welcome to OrangeHRM Website" ' Define string.
+MyStr = Right(AnyString, 1) ' Returns 
+MyVar = Right(AnyString, 6) ' Returns 
+MyDecl = Right(AnyString, 20) ' Returns 
+
+msgbox Round(100.85)'101
+Dim a
+MsgBox IsArray(a)
+a = Array(20,30,40,50,1.234,"Linda",10/10/2020)
+MsgBox IsArray(a)
+print "---------------------------------------------------------------------------------------------------------------------------"
+print " ORANGE_URL " & URL
+print " Username " & UID
+print " Password " & PW
+print " StrEnvConnection " & SQLCON
+
+print "----------------------------------------------------------------------------------------------------------------------------"
+
+Dim sStr, Val, Val_2, first_name, last_name
+sStr="strDatabasePath"        'Return the name of the Database Path Folder................................................
+
+If instr(sStr,"strDatabasePath") Then
+	Print "Pass"
+	Else
+	Print "Fail"
+End If
+
+'Call fLinkExist("Welcome Admin","16") 
+'Call fLinkExist("Logout","14") '' Logging out of the ORANGEHRM credentials from an admin user.......................................................
+
+Call ForWait(100)
+Val= "Jaqueline"          'It should display the ALM Test Case of Jaqueline White's Credentials................................
+Val_2 = " White"
+first_name="Jaqueline"                         
+last_name= "White"      
+first_name=Mid(Val,3,4)
+ last_name= Mid(Val_2,1,3)
+
+'Call ForWait(60)
+StrEnvFolderFile = "C:\Users\mirza\Documents\Orange_HRM Documents\ESS_LABELS_USERS.xml"
+Environment.LoadFromFile(StrEnvFolderFile)
+Dim LabelFiles, BreakDownLables,Lables
+ LabelFiles = "00012, 902343, 093232, 4590902, 09349034, 09340943, 094309430, 094309430"
+BreakDownLables = Split(LabelFiles,"00012","902343")
+Set Labels = Parameter("Label_ID")
+     Select Case Label_ID_1 = "00012"
+     		Case "00012"
+     		print Label_ID_1
+     	     End Select 
+      
+      Select Case Label_ID_2 = "902343"
+     		Case "902343"
+     		print Label_ID_2
+     	    End Select 
+     
+     Select Case Label_ID_3 = "093232"
+     		Case "093232"
+     		print Label_ID_3
+     	     
+   Select Case Label_ID_4 = "4590902"
+     		Case "4590902"
+     		print Label_ID_4
+            End Select 
+  	
+  	Select Case Label_ID_5 = "09349034"
+     		Case "09349034"
+     		print Label_ID_5
+     	    End Select 
+ 
+  Select Case Label_ID_6 = "09349034"
+     		Case "09349034"
+     		print Label_ID_6
+     		End Select 
+     
+     	Select Case Label_ID_7 = "094309430"
+     		Case "094309430"
+     		print Label_ID_7
+            End Select 
+     	   
+     		Select Case Label_ID_8 = "094309430"
+     		Case "094309430"
+     		print Label_ID_8
+     	    End Select 
+  
+  End Select 
+ 
+ Msgbox "All LableIDs are verified from all HRM users and priviledges."
+    
+ 
+ 
+ Dim Myhighlight
+ 	Set Myhighlight = Browser("micclass:=Browser").Page("micclass:=Page")
+  	 Myhighlight.Image("micclass:=Image","file name:=logo.png").Highlight
+  	 Myhighlight.WebElement("micclass:=WebElement","html tag:=image").Highlight
+
+
+
+'''Test Name: Linda Anderson's Credentials
+'''Created By: Faris Howlader
+'''Parameters: Username "linda.anderson" will log into the system and password "Admin12345678"
+'''Date: 4/27/2020
+strUserCloseBrowser = "C:\Users\mirza\Documents\Orange_HRM Documents\ESS_LABELS_USERS.xml"
+Environment.LoadFromFile(strUserCloseBrowser)
+
+SystemUtil.CloseProcessByName "iexplore.exe"
+Wait (10)
+'''''Accesing Environment Variables....................................................................... 
+strUserdefinedfilefrompath = "C:\Users\mirza\Documents\Orange_HRM Documents\ORANGEHRM_EMPLOYEE_CREDENTIALS_LOG.xml"
+Environment.LoadFromFile(strUserdefinedfilefrompath)
+
+username = Environment("Employee1")
+password = Environment("Password1")
+
+strCountryFilePath = "C:\Users\mirza\Documents\Orange_HRM Documents\ORANGEHRM_EMPLOYEE_INFO.xml"
+Environment.LoadFromFile(strCountryFilePath)
+
+City = Environment("City")
+Country = Environment("Country")
+
+print "---------------------------------------------------------------------------------------------------------------------------"
+print " Employee1 " & username
+print " Password1 " & password
+print " City " & City
+print " Country " & Country
+
+print "----------------------------------------------------------------------------------------------------------------------------"
+SystemUtil.Run Environment("ORANGE_URL")
+'Login the process with Linda Anderson's valid credentials
+Dim obj
+Set obj = Browser("micclass:=Browser").Page("micclass:=Page")
+obj.WebEdit("micclass:=WebEdit","name:=txtUsername").Set username
+obj.WebEdit("micclass:=WebEdit","name:=txtPassword").Set password
+'To make sure if this username exist in the HRM system.........................................................
+
+If obj.WebButton("micclass:=WebButton","html id:=btnLogin").Exist(10) Then 
+obj.WebButton("micclass:=WebButton","html id:=btnLogin").Click 
+End If
+If obj.Link("micclass:=Link","name:=Welcome Linda").Exist(10) Then 
+obj.Link("micclass:=Link","name:=Welcome Linda").Click
+
+End If
+'To make sure there is a logout button in ORangeHRM
+If obj.Link("micclass:=Link","name:=Logout").Exist(20) Then 
+obj.Link("micclass:=Link","name:=Logout").Click
+
+End If
+
+strLabelUsers = "C:\Users\mirza\Documents\Orange_HRM Documents\ESS_LABELS_USERS.xml"
+Environment.LoadFromFile(strLabelUsers)
+
+Email_Notifications = Environment("EMAIL_NOTIFICATIONS")
+Label_ID = Environment("Label_ID")
+ConnectionName = Environment("ALM_CONNECTION")
+SMSNotifications = Environment("SMS_NOTIFICATIONS")
+
+
+print "-----------------------------------------------------------------------------------------------------"
+print "EMAIL_NOTIFICATIONS " & Email_Notifications
+print "Label_ID " & Label_ID
+print "ALM_CONNECTION " & ConnectionName
+print "SMS_NOTIFICATIONS " & SMSNotifications
+
+Dim EnvVariableFolder, nRow, i,ID, Fname, Lname, JobTitle, SupVisor
+Datatable.AddSheet "Info"
+Datatable.ImportSheet "C:\Users\mirza\Documents\ESS_EXCEL_INFO\ORANGE_HRM_NOTIFICATION_SMOKE.xlsx","Users_Info","Info"
+EnvVariableFolder = "C:\Users\mirza\Documents\Orange_HRM Documents\ORANGEHRM_EMPLOYEE_CREDENTIALS_LOG.xml"
+Environment.LoadFromFile(EnvVariableFolder)
+NameofTestCase = Environment("Employee1")
+EnvVariableFolder = Split(EnvVariableFolder, "\ORANGEHRM_EMPLOYEE_CREDENTIALS_LOG")
+
+'Check if the environment is valid, then set the Current Environment
+ 
+ Print " SMS_NOTIFICATIONS " & SMSNotifications
+nRow = Datatable.GetSheet("Info").GetRowCount
+For i = 1 To nRow
+datatable.Setcurrentrow(i)
+ID = Datatable.Value("ID","Info")
+Fname = Datatable.Value("First_Name","Info")
+Lname = Datatable.Value("Last_Name","Info")
+JobTitle = Datatable.Value("Job_Title","Info")
+SupVisor = Datatable.Value("Supervisor","Info") 
+
+     If ID = "YES" Then
+     	
+     	Select Case Fname 
+     		Case "Linda Anderson"
+     		print Employee1
+     	End Select
+     	
+     	Select Case Fname 
+     		Case "Root James Craig"
+     		print Employee5
+     	End Select
+     	
+     	Select Case Fname 
+     		Case "Steven Edwards"
+     		print username
+     	End Select
+     	
+     	Select Case Fname 
+     		Case "Thomas Fleming"
+     		print Employee6
+     	End Select
+     	
+     	Select Case Fname 
+     		Case "Hannah Flores"
+     		print username
+     	End Select
+   
+
+End If
+
+Next
+
+'''Test Name: Russel Hamilton's Credentials
+'''Created By: Faris Howlader
+'''Parameters: Username "russel.hamilton" will log into the system and an encrypted password..........................................................
+'''Date: 4/27/2020  
+'Open a Browser and navigate ORANGEHRM Website...............................................................................................
+Call CloseNOpenBrowser(Browser,Url)
+Call ForWait(5) 
+
+'''''Accesing Environment Variables....................................................................... 
+strExistUserdefinedfilefrompath = "C:\Users\mirza\Documents\Orange_HRM Documents\ORANGEHRM_EMPLOYEE_CREDENTIALS_LOG.xml"
+Environment.LoadFromFile(strExistUserdefinedfilefrompath)
+
+strExtractingFilePath= "C:\Users\mirza\Documents\Orange_HRM Documents\ESS_LABELS_USERS.xml"	
+Environment.LoadFromFile(strExtractingFilePath)
+Dim CurrentFile, NewFileName
+CurrentFile="C:\Users\mirza\Documents": NewFileName="ESS_LABELS_USERS"
+comp=strcomp(CurrentFile,NewFileName)
+print comp
+
+If CurrentFile=strreverse ("C:\Users\mirza\Documents") Then 
+print "C:\Users\mirza\Documents " & CurrentFile
+'To make sure that name of the file is reversed
+End If
+'To replace the name qcbin to ALMCONNECTION.............................................................................................
+Dim InputUsername
+InputUsername = Replace("http://yourQCServer/qcbin","qcbin","ALMCONNECTION") 
+Print ("ALMCONNECTION: " & InputUsername)
+
+Label_ID = Environment("Label_ID")
+SMSNotifications = Environment("SMS_NOTIFICATIONS")
+
+print "SMS_NOTIFICATIONS " & SMSNotifications
+print "Label_ID " & Label_ID
+
+'''''Accesing Environment Variables....................................................................... 
+strUserdefinedfilefrompath = "C:\Users\mirza\Documents\Orange_HRM Documents\ORANGEHRM_EMPLOYEE_CREDENTIALS_LOG.xml"
+Environment.LoadFromFile(strUserdefinedfilefrompath)
+
+username = Environment("Employee3")
+password = Environment("Password3")
+
+strCountryFilePath = "C:\Users\mirza\Documents\Orange_HRM Documents\ORANGEHRM_EMPLOYEE_INFO.xml"
+Environment.LoadFromFile(strCountryFilePath)
+
+City = Environment("City")
+Country = Environment("Country")
+
+print "---------------------------------------------------------------------------------------------------------------------------"
+print " Employee1 " & username
+print " Password1 " & password
+print " City " & City
+print " Country " & Country
+
+print "----------------------------------------------------------------------------------------------------------------------------"
+SystemUtil.Run Environment("ORANGE_URL")
+'Login the process with Russel Hamilton's valid credentials
+Dim obj
+Set obj = Browser("micclass:=Browser").Page("micclass:=Page")
+obj.WebEdit("micclass:=WebEdit","name:=txtUsername").Set username
+obj.WebEdit("micclass:=WebEdit","name:=txtPassword").Set password
+'To make sure if this username exist in the HRM system.........................................................
+
+If obj.WebButton("micclass:=WebButton","html id:=btnLogin").Exist(10) Then 
+obj.WebButton("micclass:=WebButton","html id:=btnLogin").Click 
+End If
+'Get TCID which is the name of the script based on Russel Hamilton's Management and will display the matched records on excel sheet
+strLabelUsers = "C:\Users\mirza\Documents\Orange_HRM Documents\ESS_LABELS_USERS.xml"
+Environment.LoadFromFile(strLabelUsers)
+
+Email_Notifications = Environment("EMAIL_NOTIFICATIONS")
+Label_ID = Environment("Label_ID")
+ConnectionName = Environment("ALM_CONNECTION")
+SMSNotifications = Environment("SMS_NOTIFICATIONS")
+
+
+print "-----------------------------------------------------------------------------------------------------"
+print "EMAIL_NOTIFICATIONS " & Email_Notifications
+print "Label_ID " & Label_ID
+print "ALM_CONNECTION " & ConnectionName
+print "SMS_NOTIFICATIONS " & SMSNotifications
+
+Dim EnvVariableFolder, nRow, i,ID, Fname, Lname, JobTitle, SupVisor
+Datatable.AddSheet "Info"
+Datatable.ImportSheet "C:\Users\mirza\Documents\ESS_EXCEL_INFO\ORANGE_HRM_NOTIFICATION_SMOKE.xlsx","Users_Info","Info"
+EnvVariableFolder = "C:\Users\mirza\Documents\Orange_HRM Documents\ORANGEHRM_EMPLOYEE_CREDENTIALS_LOG.xml"
+Environment.LoadFromFile(EnvVariableFolder)
+NameofTestCase = Environment("Employee1")
+EnvVariableFolder = Split(EnvVariableFolder, "\ORANGEHRM_EMPLOYEE_CREDENTIALS_LOG")

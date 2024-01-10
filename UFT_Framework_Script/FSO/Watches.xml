@@ -1,0 +1,3 @@
+﻿<Properties>
+  <WatchEntry0 value="fso.FileExists(file_location)" />
+</Properties>
